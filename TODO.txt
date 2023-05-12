@@ -1,0 +1,9 @@
+modifier : 
+veins-veins-5.2 -> src -> veins -> modules -> application -> traci -> MyVeinsApp.cc
+pour récupérer les messages CAM (vitesse moyenne des véhicules, nombre d'accidents, etc) dans un fichier csv ou txt
+
+créer des graphes avec ces csv
+
+interpréter ces graphes
+
+faire la même chose avec les messages CPM (comment ? aucune idée)
