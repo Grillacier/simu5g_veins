@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2017 Christoph Sommer <sommer@ccs-labs.org>
+// Copyright (C) 2006-2017 Christoph Sommer <sommer@ccs-labs.org>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
@@ -20,20 +20,20 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-//import org.car2x.veins.subprojects.veins_inet.examples.veins_inet.*;
+//
+// Veins Mobility module for the INET Framework
+// Based on inet::MovingMobilityBase of INET Framework v4.0.0
+//
 
-import org.car2x.veins.nodes.RSU;
-import org.car2x.veins.nodes.Scenario;
+package src.veins_inet;
 
-import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.WirelessHost;
+import inet.mobility.base.MobilityBase;
 
-network pavillonsNetwork extends Scenario
+simple VeinsInetMobility extends MobilityBase
 {
     parameters:
-        @display("bgb=600,600");
-    submodules:
-        rsu[1]: RSU {
-            @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
-        }
+        @class(veins::VeinsInetMobility);
+        @display("i=block/cogwheel");
+        @signal[mobilityStateChanged](type=inet::MobilityBase);
+        bool initFromDisplayString = default(true); // do not change this to false
 }

@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2017 Christoph Sommer <sommer@ccs-labs.org>
+// Copyright (C) 2006-2017 Christoph Sommer <sommer@ccs-labs.org>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
@@ -20,20 +20,18 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-//import org.car2x.veins.subprojects.veins_inet.examples.veins_inet.*;
+#include "veins_inet/VeinsInetManager.h"
 
-import org.car2x.veins.nodes.RSU;
-import org.car2x.veins.nodes.Scenario;
+#include "veins/base/utils/Coord.h"
+#include "veins_inet/VeinsInetMobility.h"
+#include "inet/common/scenario/ScenarioManager.h"
 
-import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.WirelessHost;
+using veins::VeinsInetManager;
 
-network pavillonsNetwork extends Scenario
+Define_Module(veins::VeinsInetManager);
+
+void VeinsInetManager::initialize(int stage)
 {
-    parameters:
-        @display("bgb=600,600");
-    submodules:
-        rsu[1]: RSU {
-            @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
-        }
+    TraCIScenarioManagerLaunchd::initialize(stage);
+    VeinsInetManagerBase::initialize(stage);
 }

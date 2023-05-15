@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for pavillons
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -O out -KVEINS_VEINS_5_2_PROJ=../veins-veins-5.2 -DVEINS_IMPORT -I. -I$$\(VEINS_VEINS_5_2_PROJ\)/src -Isrc -L$$\(VEINS_VEINS_5_2_PROJ\)/src -lveins$$\(D\)
+#  opp_makemake -f --deep -O out -KINET4_4_PROJ=../inet4.4 -KVEINS_VEINS_5_2_PROJ=../veins-veins-5.2 -DINET_IMPORT -DVEINS_IMPORT -I. -I$$\(INET4_4_PROJ\)/src -I$$\(VEINS_VEINS_5_2_PROJ\)/src -Isrc -L$$\(INET4_4_PROJ\)/src -L$$\(VEINS_VEINS_5_2_PROJ\)/src -lINET$$\(D\) -lveins$$\(D\)
 #
 
 # Name of target to be created (-o option)
@@ -19,13 +19,13 @@ USERIF_LIBS = $(ALL_ENV_LIBS) # that is, $(QTENV_LIBS) $(CMDENV_LIBS)
 #USERIF_LIBS = $(QTENV_LIBS)
 
 # C++ include paths (with -I)
-INCLUDE_PATH = -I. -I$(VEINS_VEINS_5_2_PROJ)/src -Isrc
+INCLUDE_PATH = -I. -I$(INET4_4_PROJ)/src -I$(VEINS_VEINS_5_2_PROJ)/src -Isrc
 
 # Additional object and library files to link with
 EXTRA_OBJS =
 
 # Additional libraries (-L, -l options)
-LIBS = $(LDFLAG_LIBPATH)$(VEINS_VEINS_5_2_PROJ)/src  -lveins$(D)
+LIBS = $(LDFLAG_LIBPATH)$(INET4_4_PROJ)/src $(LDFLAG_LIBPATH)$(VEINS_VEINS_5_2_PROJ)/src  -lINET$(D) -lveins$(D)
 
 # Output directory
 PROJECT_OUTPUT_DIR = out
@@ -33,15 +33,24 @@ PROJECTRELATIVE_PATH =
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS =
+OBJS = \
+    $O/src/veins_inet/VeinsInetApplicationBase.o \
+    $O/src/veins_inet/VeinsInetManager.o \
+    $O/src/veins_inet/VeinsInetManagerBase.o \
+    $O/src/veins_inet/VeinsInetManagerForker.o \
+    $O/src/veins_inet/VeinsInetMobility.o \
+    $O/src/veins_inet/VeinsInetSampleApplication.o \
+    $O/src/veins_inet/VeinsInetSampleMessage_m.o
 
 # Message files
-MSGFILES =
+MSGFILES = \
+    src/veins_inet/VeinsInetSampleMessage.msg
 
 # SM files
 SMFILES =
 
 # Other makefile variables (-K)
+INET4_4_PROJ=../inet4.4
 VEINS_VEINS_5_2_PROJ=../veins-veins-5.2
 
 #------------------------------------------------------------------------------
@@ -63,10 +72,10 @@ include $(CONFIGFILE)
 # Simulation kernel and user interface libraries
 OMNETPP_LIBS = $(OPPMAIN_LIB) $(USERIF_LIBS) $(KERNEL_LIBS) $(SYS_LIBS)
 ifneq ($(PLATFORM),win32)
-LIBS += -Wl,-rpath,$(abspath $(VEINS_VEINS_5_2_PROJ)/src)
+LIBS += -Wl,-rpath,$(abspath $(INET4_4_PROJ)/src) -Wl,-rpath,$(abspath $(VEINS_VEINS_5_2_PROJ)/src)
 endif
 
-COPTS = $(CFLAGS) $(IMPORT_DEFINES) -DVEINS_IMPORT $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
+COPTS = $(CFLAGS) $(IMPORT_DEFINES) -DINET_IMPORT -DVEINS_IMPORT $(INCLUDE_PATH) -I$(OMNETPP_INCL_DIR)
 MSGCOPTS = $(INCLUDE_PATH)
 SMCOPTS =
 

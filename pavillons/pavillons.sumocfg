@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2023-04-06 22:50:54 by Eclipse SUMO GUI Version 1.11.0
+-->
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/home/simu5g/sumo-1.11.0/TER/pavillons/pavillons.net.xml"/>
+        <route-files value="/home/simu5g/sumo-1.11.0/TER/pavillons/pavillons.rou.xml"/>
+    </input>
+    
+    <time>
+    	<begin value="0"/>
+    	<end value="1000"/>
+    </time>
+
+</configuration>

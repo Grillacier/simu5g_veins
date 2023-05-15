@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2017 Christoph Sommer <sommer@ccs-labs.org>
+// Copyright (C) 2018 Christoph Sommer <sommer@ccs-labs.org>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
@@ -20,20 +20,22 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-//import org.car2x.veins.subprojects.veins_inet.examples.veins_inet.*;
+#pragma once
 
-import org.car2x.veins.nodes.RSU;
-import org.car2x.veins.nodes.Scenario;
+#include "veins_inet/veins_inet.h"
 
-import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import inet.node.inet.WirelessHost;
+#include "veins_inet/VeinsInetApplicationBase.h"
 
-network pavillonsNetwork extends Scenario
-{
-    parameters:
-        @display("bgb=600,600");
-    submodules:
-        rsu[1]: RSU {
-            @display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
-        }
-}
+class VEINS_INET_API VeinsInetSampleApplication : public veins::VeinsInetApplicationBase {
+protected:
+    bool haveForwarded = false;
+
+protected:
+    virtual bool startApplication() override;
+    virtual bool stopApplication() override;
+    virtual void processPacket(std::shared_ptr<inet::Packet> pk) override;
+
+public:
+    VeinsInetSampleApplication();
+    ~VeinsInetSampleApplication();
+};
