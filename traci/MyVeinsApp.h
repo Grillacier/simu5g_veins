@@ -52,6 +52,13 @@ protected:
 
     void handleSelfMsg(cMessage* msg) override;
     void handlePositionUpdate(cObject* obj) override;
+    void calculateAndSaveAverageSpeed();
+
+
+private:
+    std::vector<double> speeds;
+    int vehicleCount;
+
 };
 
 } // namespace veins

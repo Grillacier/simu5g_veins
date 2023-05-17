@@ -21,6 +21,7 @@
 //
 
 #include "veins/modules/application/traci/MyVeinsApp.h"
+#include <fstream>
 
 using namespace veins;
 
@@ -40,14 +41,22 @@ void MyVeinsApp::initialize(int stage)
 
 void MyVeinsApp::finish()
 {
+    calculateAndSaveAverageSpeed();
     DemoBaseApplLayer::finish();
-    // statistics recording goes here
 }
+
 
 void MyVeinsApp::onBSM(DemoSafetyMessage* bsm)
 {
     // Your application has received a beacon message from another car or RSU
     // code for handling the message goes here
+
+    DemoBaseApplLayer::onBSM(bsm);
+    //traciVehicle->setColor(RGB(0, 255, 0));
+    getParentModule()->getDisplayString().setTagArg("i", 1, "green");
+    traciVehicle->setSpeed(traciVehicle->getSpeed()/2);
+    std::cout << "slowing down" << std::endl;
+    //traciVehicle->slowDown(10, 30);
 }
 
 void MyVeinsApp::onWSM(BaseFrame1609_4* wsm)
@@ -72,6 +81,31 @@ void MyVeinsApp::handleSelfMsg(cMessage* msg)
 void MyVeinsApp::handlePositionUpdate(cObject* obj)
 {
     DemoBaseApplLayer::handlePositionUpdate(obj);
-    // the vehicle has moved. Code that reacts to new positions goes here.
-    // member variables such as currentPosition and currentSpeed are updated in the parent class
+    double currentSpeed = traciVehicle->getSpeed();
+    // put current speed in vector with other speeds
+    speeds.push_back(currentSpeed);
+    vehicleCount++;
+}
+
+void MyVeinsApp::calculateAndSaveAverageSpeed()
+{
+    // calculate mean speed
+    double totalSpeed = 0.0;
+    for (double speed : speeds) {
+        totalSpeed += speed;
+    }
+    double averageSpeed = totalSpeed / vehicleCount;
+
+    std::ofstream outFile("average_speed.txt");
+
+    if (outFile.is_open()) {
+        outFile << "Average Speed" << std::endl;
+        outFile << averageSpeed << std::endl;
+        outFile.close();
+
+        EV << "Average speed saved to average_speed.csv" << std::endl;
+    }
+    else {
+        EV << "Error: Unable to open file for writing" << std::endl;
+    }
 }
